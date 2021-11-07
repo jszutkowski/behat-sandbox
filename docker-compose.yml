@@ -1,0 +1,55 @@
+version: "3.4"
+
+volumes:
+  mysql: ~
+
+###> doctrine/doctrine-bundle ###
+  db-data:
+###< doctrine/doctrine-bundle ###
+
+services:
+  php:
+    restart: "no"
+    build:
+      context: "./"
+      dockerfile: "./docker/php/Dockerfile"
+    volumes:
+      - ".:/app"
+    command: "php -S 0.0.0.0:80 -t public -c .docker/php/php.ini"
+    ports:
+      - "80:80"
+    links:
+      - mysql
+    environment:
+      DATABASE_URL: "mysql://root:rootpassword@mysql:3306/main"
+      APP_ENV: "dev"
+      PHP_IDE_CONFIG: "serverName=Behat"
+#      $(ipconfig getifaddr en0)
+#    depends_on:
+#      redis:
+#        condition: service_healthy
+#      mysql:
+#        condition: service_healthy
+    extra_hosts:
+#      - ip addr show docker0 | grep "inet " | awk '{print $2}' | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}'
+#      - "host.docker.internal:$(ip addr show docker0 | grep \"inet \" | awk '{print $2}' | grep -o '[0-9]\\{1,3\}\\.[0-9]\\{1,3\\}\\.[0-9]\\{1,3\}\\.[0-9]\\{1,3\\}')"
+      - "host.docker.internal:172.17.0.1"
+
+  mysql:
+    image: "mysql:5.7"
+#    expose:
+#      - "3306"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "mysql:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: "rootpassword"
+      MYSQL_DATABASE: "main"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+#    healthcheck:
+#      test: "mysqladmin ping -h localhost -P 3306 -u $${MYSQL_USER} -p$${MYSQL_PASSWORD}"
+#      interval: 2s
+#      timeout: 5s
+#      retries: 15
