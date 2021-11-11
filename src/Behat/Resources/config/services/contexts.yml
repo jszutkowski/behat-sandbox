@@ -1,0 +1,22 @@
+services:
+    _defaults:
+        public: true
+
+    App\Behat\Context\FeatureContext:
+        autowire: true
+
+    App\Behat\Context\MyMinkContext:
+        autowire: true
+
+    app.behat.context.ui.login:
+        class: App\Behat\Context\Ui\LoginContext
+        arguments:
+            - '@app.behat.page.login'
+
+    app.behat.context.ui.posts:
+        class: App\Behat\Context\Ui\PostsContext
+        arguments:
+            - '@app.behat.page.post.index'
+            - '@app.behat.page.post.new'
+            - '@app.behat.page.post.edit'
+            - '@app.behat.page.post.show'

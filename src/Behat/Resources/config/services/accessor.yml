@@ -1,0 +1,6 @@
+services:
+#  _defaults:
+#    public: true
+
+  App\Behat\Service\Accessor\TableAccessor: ~
+  App\Behat\Service\Accessor\TableAccessorInterface: '@App\Behat\Service\Accessor\TableAccessor'

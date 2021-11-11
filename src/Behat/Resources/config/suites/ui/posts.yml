@@ -1,0 +1,11 @@
+default:
+  suites:
+    ui_posts:
+      contexts:
+#        - Behat\MinkExtension\Context\MinkContext
+        - App\Behat\Context\FeatureContext
+        - App\Behat\Context\MyMinkContext
+        - app.behat.context.ui.posts
+
+      filters:
+        tags: "@posts&&@ui"

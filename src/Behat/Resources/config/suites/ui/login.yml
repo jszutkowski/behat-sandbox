@@ -1,0 +1,10 @@
+default:
+  suites:
+    ui_login:
+      contexts:
+#        - Behat\MinkExtension\Context\MinkContext
+        - App\Behat\Context\MyMinkContext
+        - app.behat.context.ui.login
+
+      filters:
+        tags: "@login&&@ui"

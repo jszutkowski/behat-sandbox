@@ -1,0 +1,35 @@
+services:
+    app.behat.page:
+        class: FriendsOfBehat\PageObjectExtension\Page\Page
+        abstract: true
+        arguments:
+          - '@behat.mink.default_session'
+          - '@behat.mink.parameters'
+
+    app.behat.page.symfony:
+        class: FriendsOfBehat\PageObjectExtension\Page\SymfonyPage
+        parent: app.behat.page
+        arguments:
+            $router: '@router.default'
+
+    app.behat.page.login:
+        class: App\Behat\Page\LoginPage
+        parent: app.behat.page.symfony
+
+    app.behat.page.post.index:
+        class: App\Behat\Page\Post\IndexPage
+        parent: app.behat.page.symfony
+        autowire: true
+
+    app.behat.page.post.new:
+        class: App\Behat\Page\Post\NewPage
+        parent: app.behat.page.symfony
+
+    app.behat.page.post.edit:
+        class: App\Behat\Page\Post\EditPage
+        parent: app.behat.page.symfony
+
+    app.behat.page.post.show:
+        class: App\Behat\Page\Post\ShowPage
+        parent: app.behat.page.symfony
+

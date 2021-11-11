@@ -1,0 +1,4 @@
+imports:
+    - suites/ui/login.yml
+    - suites/ui/posts.yml
+
